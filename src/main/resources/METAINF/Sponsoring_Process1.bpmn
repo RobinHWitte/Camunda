@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_15sgx9h" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.44.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.24.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_15sgx9h" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.44.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.24.0">
+  <bpmn:message id="Message_Angebotsanforderung" name="MSG_ANGEBOTSANFORDERUNG" />
   <bpmn:process id="Process_10fekfz" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1jriocr</bpmn:outgoing>
@@ -10,6 +11,10 @@
       </bpmn:extensionElements>
     </bpmn:sequenceFlow>
     <bpmn:task id="Activity_0iu0vsu" name="Sponsorenmappe erstellen">
+      <bpmn:extensionElements>
+        <camunda:formRef>mappe_form</camunda:formRef>
+        <camunda:formRefBinding>latest</camunda:formRefBinding>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0r1xzrd</bpmn:incoming>
       <bpmn:outgoing>Flow_02t46h7</bpmn:outgoing>
     </bpmn:task>
@@ -28,7 +33,9 @@
     <bpmn:intermediateCatchEvent id="Event_17anl7e" name="6 Monate vor der Veranstaltung">
       <bpmn:incoming>Flow_1jfh4z1</bpmn:incoming>
       <bpmn:outgoing>Flow_0z08lmb</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_1hspx0w" />
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1hspx0w">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT30S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1jfh4z1" sourceRef="Gateway_0ftec5n" targetRef="Event_17anl7e" />
     <bpmn:endEvent id="Event_1px39si" name="Kein Sponsoring">
@@ -36,6 +43,10 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0z08lmb" sourceRef="Event_17anl7e" targetRef="Activity_051lbei" />
     <bpmn:task id="Activity_051lbei" name="Sponsoren absagen">
+      <bpmn:extensionElements>
+        <camunda:formRef>sponsoren_absagen_form</camunda:formRef>
+        <camunda:formRefBinding>latest</camunda:formRefBinding>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0z08lmb</bpmn:incoming>
       <bpmn:outgoing>Flow_11h4alt</bpmn:outgoing>
     </bpmn:task>
@@ -43,10 +54,14 @@
     <bpmn:intermediateCatchEvent id="Event_0wh21r2" name="Angebotsanforderung">
       <bpmn:incoming>Flow_1o6g1du</bpmn:incoming>
       <bpmn:outgoing>Flow_1srhwra</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0uxnuw9" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0uxnuw9" messageRef="Message_Angebotsanforderung" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1o6g1du" sourceRef="Gateway_0ftec5n" targetRef="Event_0wh21r2" />
     <bpmn:task id="Activity_0geot0b" name="Angebot schreiben">
+      <bpmn:extensionElements>
+        <camunda:formRef>angebot_schreiben_form</camunda:formRef>
+        <camunda:formRefBinding>latest</camunda:formRefBinding>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_13tdw1r</bpmn:incoming>
       <bpmn:outgoing>Flow_1y9irqn</bpmn:outgoing>
     </bpmn:task>
@@ -64,38 +79,48 @@
       <bpmn:outgoing>Flow_0ra9efs</bpmn:outgoing>
       <bpmn:outgoing>Flow_13tdw1r</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0ra9efs" name="nein" sourceRef="Gateway_0c9ecfi" targetRef="Activity_0k9vioi" />
+    <bpmn:sequenceFlow id="Flow_0ra9efs" name="nein" sourceRef="Gateway_0c9ecfi" targetRef="Activity_0k9vioi">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${angebotMoeglich == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1srhwra" sourceRef="Event_0wh21r2" targetRef="Gateway_07siab0" />
     <bpmn:task id="Activity_0k9vioi" name="Sponsoren absagen">
+      <bpmn:extensionElements>
+        <camunda:formRef>sponsoren_absagen_form</camunda:formRef>
+        <camunda:formRefBinding>latest</camunda:formRefBinding>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0ra9efs</bpmn:incoming>
       <bpmn:outgoing>Flow_1mrgiz9</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="Flow_1mrgiz9" sourceRef="Activity_0k9vioi" targetRef="Event_1ibtoby" />
-    <bpmn:sequenceFlow id="Flow_13tdw1r" name="ja" sourceRef="Gateway_0c9ecfi" targetRef="Activity_0geot0b" />
+    <bpmn:sequenceFlow id="Flow_13tdw1r" name="ja" sourceRef="Gateway_0c9ecfi" targetRef="Activity_0geot0b">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${angebotMoeglich == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_150ggd2" name="Angebot verschickt">
       <bpmn:incoming>Flow_0dbraxb</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1y9irqn" sourceRef="Activity_0geot0b" targetRef="Activity_0mt4tqg" />
     <bpmn:task id="Activity_0mt4tqg" name="Angebot verschicken">
+      <bpmn:extensionElements>
+        <camunda:formRef>angebot_verschicken_form</camunda:formRef>
+        <camunda:formRefBinding>latest</camunda:formRefBinding>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1y9irqn</bpmn:incoming>
       <bpmn:outgoing>Flow_0dbraxb</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="Flow_0dbraxb" sourceRef="Activity_0mt4tqg" targetRef="Event_150ggd2" />
     <bpmn:task id="Activity_18to257" name="Preisliste erstellen">
+      <bpmn:extensionElements>
+        <camunda:formRef>preisliste_form</camunda:formRef>
+        <camunda:formRefBinding>latest</camunda:formRefBinding>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1cmbban</bpmn:incoming>
       <bpmn:outgoing>Flow_0r1xzrd</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="Flow_0r1xzrd" sourceRef="Activity_18to257" targetRef="Activity_0iu0vsu" />
     <bpmn:task id="Activity_0865bo4" name="Leistungs- und Kapazitätsplan erstellen">
       <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="Input_37lrgfc" />
-          <camunda:outputParameter name="Output_3v3ch91" />
-        </camunda:inputOutput>
-        <camunda:executionListener class="" event="start" />
-        <camunda:properties>
-          <camunda:property />
-        </camunda:properties>
+        <camunda:formRef>plan_form</camunda:formRef>
+        <camunda:formRefBinding>latest</camunda:formRefBinding>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1jriocr</bpmn:incoming>
       <bpmn:outgoing>Flow_1cmbban</bpmn:outgoing>
@@ -103,14 +128,8 @@
     <bpmn:sequenceFlow id="Flow_1cmbban" sourceRef="Activity_0865bo4" targetRef="Activity_18to257" />
     <bpmn:task id="Activity_05v70ko" name="Angabots anforderung erfassen">
       <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="Input_3aanp0t" />
-          <camunda:outputParameter name="Output_0tmnedj" />
-        </camunda:inputOutput>
-        <camunda:executionListener class="" event="start" />
-        <camunda:properties>
-          <camunda:property />
-        </camunda:properties>
+        <camunda:formRef>angebotsanforderung_form</camunda:formRef>
+        <camunda:formRefBinding>latest</camunda:formRefBinding>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1cko276</bpmn:incoming>
       <bpmn:outgoing>Flow_1a7lw0c</bpmn:outgoing>
@@ -121,12 +140,20 @@
       <bpmn:outgoing>Flow_0rkskpx</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1a7lw0c" sourceRef="Activity_05v70ko" targetRef="Gateway_06j5c1u" />
-    <bpmn:sequenceFlow id="Flow_02v0xfx" name="ja" sourceRef="Gateway_06j5c1u" targetRef="Gateway_0c9ecfi" />
+    <bpmn:sequenceFlow id="Flow_02v0xfx" name="ja" sourceRef="Gateway_06j5c1u" targetRef="Gateway_0c9ecfi">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${datenVollstaendig == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:task id="Activity_1f1t3gh" name="daten Ändern">
+      <bpmn:extensionElements>
+        <camunda:formRef>daten_aendern_form</camunda:formRef>
+        <camunda:formRefBinding>latest</camunda:formRefBinding>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0rkskpx</bpmn:incoming>
       <bpmn:outgoing>Flow_1ovpvfp</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_0rkskpx" name="nein" sourceRef="Gateway_06j5c1u" targetRef="Activity_1f1t3gh" />
+    <bpmn:sequenceFlow id="Flow_0rkskpx" name="nein" sourceRef="Gateway_06j5c1u" targetRef="Activity_1f1t3gh">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${datenVollstaendig == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_07siab0">
       <bpmn:incoming>Flow_1srhwra</bpmn:incoming>
       <bpmn:incoming>Flow_1ovpvfp</bpmn:incoming>
