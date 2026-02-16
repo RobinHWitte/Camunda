@@ -1,0 +1,38 @@
+{
+  "components": [
+    {
+      "label": "Sponsor Name",
+      "type": "textfield",
+      "layout": { "row": "Row_req_1", "columns": null },
+      "id": "Field_req_name",
+      "key": "sponsorName"
+    },
+    {
+      "label": "Kontakt E-Mail",
+      "type": "textfield",
+      "layout": { "row": "Row_req_2", "columns": null },
+      "id": "Field_req_mail",
+      "key": "sponsorEmail"
+    },
+    {
+      "label": "Wunschbetrag (EUR)",
+      "type": "number",
+      "layout": { "row": "Row_req_3", "columns": null },
+      "id": "Field_req_amount",
+      "key": "requestedAmount"
+    },
+    {
+      "label": "Daten vollständig?",
+      "type": "checkbox",
+      "layout": { "row": "Row_req_4", "columns": null },
+      "id": "Field_req_complete",
+      "key": "dataComplete"
+    }
+  ],
+  "type": "default",
+  "id": "Form_angebotsanforderung",
+  "exporter": { "name": "Camunda Modeler", "version": "5.44.0" },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.24.0",
+  "schemaVersion": 19
+}

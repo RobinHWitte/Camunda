@@ -1,0 +1,32 @@
+{
+  "components": [
+    {
+      "label": "Preisliste Version",
+      "type": "textfield",
+      "layout": { "row": "Row_pl_1", "columns": null },
+      "id": "Field_pl_ver",
+      "key": "preislisteVersion"
+    },
+    {
+      "subtype": "date",
+      "dateLabel": "Gültig ab",
+      "type": "datetime",
+      "layout": { "row": "Row_pl_2", "columns": null },
+      "id": "Field_pl_from",
+      "key": "preislisteValidFrom"
+    },
+    {
+      "label": "Notizen",
+      "type": "textarea",
+      "layout": { "row": "Row_pl_3", "columns": null },
+      "id": "Field_pl_notes",
+      "key": "preislisteNotes"
+    }
+  ],
+  "type": "default",
+  "id": "Form_preisliste",
+  "exporter": { "name": "Camunda Modeler", "version": "5.44.0" },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.24.0",
+  "schemaVersion": 19
+}
