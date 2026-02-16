@@ -1,0 +1,28 @@
+{
+  "components": [
+    {
+      "label": "Versandkanal",
+      "type": "select",
+      "layout": { "row": "Row_send_1", "columns": null },
+      "id": "Field_send_channel",
+      "key": "sendChannel",
+      "values": [
+        { "label": "E-Mail", "value": "email" },
+        { "label": "Post", "value": "post" }
+      ]
+    },
+    {
+      "label": "Bestätigen: Angebot wurde verschickt",
+      "type": "checkbox",
+      "layout": { "row": "Row_send_2", "columns": null },
+      "id": "Field_send_done",
+      "key": "offerSent"
+    }
+  ],
+  "type": "default",
+  "id": "Form_angebot_verschicken",
+  "exporter": { "name": "Camunda Modeler", "version": "5.44.0" },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.24.0",
+  "schemaVersion": 19
+}

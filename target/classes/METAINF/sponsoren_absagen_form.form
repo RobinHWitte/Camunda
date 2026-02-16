@@ -1,0 +1,24 @@
+{
+  "components": [
+    {
+      "label": "Absagegrund",
+      "type": "textarea",
+      "layout": { "row": "Row_rej_1", "columns": null },
+      "id": "Field_rej_reason",
+      "key": "rejectReason"
+    },
+    {
+      "label": "Bestätigen: Sponsor wurde abgesagt",
+      "type": "checkbox",
+      "layout": { "row": "Row_rej_2", "columns": null },
+      "id": "Field_rej_done",
+      "key": "rejectDone"
+    }
+  ],
+  "type": "default",
+  "id": "Form_sponsoren_absagen",
+  "exporter": { "name": "Camunda Modeler", "version": "5.44.0" },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.24.0",
+  "schemaVersion": 19
+}

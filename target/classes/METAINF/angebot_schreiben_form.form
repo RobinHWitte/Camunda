@@ -1,0 +1,24 @@
+{
+  "components": [
+    {
+      "label": "Angebotstext",
+      "type": "textarea",
+      "layout": { "row": "Row_offer_1", "columns": null },
+      "id": "Field_offer_text",
+      "key": "offerText"
+    },
+    {
+      "label": "Angebotssumme (EUR)",
+      "type": "number",
+      "layout": { "row": "Row_offer_2", "columns": null },
+      "id": "Field_offer_amount",
+      "key": "offerAmount"
+    }
+  ],
+  "type": "default",
+  "id": "Form_angebot_schreiben",
+  "exporter": { "name": "Camunda Modeler", "version": "5.44.0" },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.24.0",
+  "schemaVersion": 19
+}
