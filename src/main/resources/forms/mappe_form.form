@@ -1,0 +1,31 @@
+{
+  "components": [
+    {
+      "label": "Zielgruppe",
+      "type": "textfield",
+      "layout": { "row": "Row_map_1", "columns": null },
+      "id": "Field_map_target",
+      "key": "mappeTargetGroup"
+    },
+    {
+      "label": "Mappe erstellt?",
+      "type": "checkbox",
+      "layout": { "row": "Row_map_2", "columns": null },
+      "id": "Field_map_done",
+      "key": "mappeDone"
+    },
+    {
+      "label": "Dateiname / Link",
+      "type": "textfield",
+      "layout": { "row": "Row_map_3", "columns": null },
+      "id": "Field_map_file",
+      "key": "mappeFileRef"
+    }
+  ],
+  "type": "default",
+  "id": "Form_mappe",
+  "exporter": { "name": "Camunda Modeler", "version": "5.44.0" },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.24.0",
+  "schemaVersion": 19
+}
